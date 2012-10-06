@@ -38,8 +38,8 @@ static void send_http_get_and_print(BIO * sbio) {
 int main(int argc, char *argv[]) {
 	BIO *sbio;
 	SSL_CTX *ssl_ctx;
-	SSL * ssl;
-	X509 * server_cert;
+	SSL *ssl;
+	X509 *server_cert;
 
 	// Initialize OpenSSL
 	OpenSSL_add_all_algorithms();

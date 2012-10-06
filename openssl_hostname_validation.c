@@ -97,6 +97,7 @@ static int matches_subject_alternative_name(char *hostname, X509 *server_cert) {
 			}
 		}
 	}
+	sk_GENERAL_NAME_pop_free(san_names, GENERAL_NAME_free);
 
 error:
 	return hostname_matched;
