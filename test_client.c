@@ -11,12 +11,12 @@
 #define TARGET_PORT "443"
 
 // CA certificate that signed www.google.com's certificate
-#define TRUSTED_CA_FILE "VerisignClass3PublicPrimaryCertificationAuthority.pem"
+#define TRUSTED_CA_PATHNAME "VerisignClass3PublicPrimaryCertificationAuthority.pem"
 
 
 
 #define TARGET_SERVER TARGET_HOST":"TARGET_PORT
-// 'High' cipher suites minus anonymous and Camellia
+// 'High' cipher suites minus Anonymous DH and Camellia
 #define SECURE_CIPHER_LIST "RC4-SHA:HIGH:!ADH:!AECDH:!CAMELLIA"
 
 /* Sends an HTTP GET and prints the server's response */
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
 	// Enable certificate validation
 	SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, NULL);
 	// Configure the CA trust store to be used
-	if (SSL_CTX_load_verify_locations(ssl_ctx, TRUSTED_CA_FILE, NULL) != 1) {
+	if (SSL_CTX_load_verify_locations(ssl_ctx, TRUSTED_CA_PATHNAME, NULL) != 1) {
 		fprintf(stderr, "Couldn't load certificate trust store.\n");
 		goto error_2;
 	}
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	// Validate the hostname
-	if (validate_hostname(TARGET_HOST, server_cert) != HOSTNAME_VALIDATION_MATCH_OK) {
+	if (validate_hostname(TARGET_HOST, server_cert) != MatchFound) {
 		fprintf(stderr, "Hostname validation failed.\n");
 		goto error_5;
 	}

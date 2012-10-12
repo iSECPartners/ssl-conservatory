@@ -1,6 +1,10 @@
 
-#define HOSTNAME_VALIDATION_MATCH_OK 1
-#define HOSTNAME_VALIDATION_MATCH_FAILED -1
-#define HOSTNAME_VALIDATION_ERR -2
+typedef enum {
+	MatchFound,
+	MatchNotFound,
+	NoSANPresent,
+	MalformedCertificate,
+	Error
+} HostnameValidationResult;
 
-int validate_hostname(char *hostname, X509 *server_cert);
+HostnameValidationResult validate_hostname(const char *hostname, const X509 *server_cert);

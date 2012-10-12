@@ -1,4 +1,4 @@
-# Tested on Ubuntu 10.04
+# Tested on Ubuntu 10.04 and Cygwin
 CC=gcc
 CFLAGS=-c -Wall
 LDFLAGS= -lcrypto -lssl
