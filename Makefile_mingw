@@ -3,7 +3,7 @@ CC=gcc
 CFLAGS=-c -Wall
 LDFLAGS= -leay32 -lssleay32
 
-all: clean test_client
+all: test_client
 
 test_client: test_client.o openssl_hostname_validation.o
 	$(CC) test_client.o openssl_hostname_validation.o -o test_client $(LDFLAGS)
@@ -15,4 +15,4 @@ openssl_hostname_validation.o: openssl_hostname_validation.c
 	$(CC) $(CFLAGS) openssl_hostname_validation.c
 
 clean:
-	rm -rf *o test_client.exe
+	rm -rf *.o test_client.exe
