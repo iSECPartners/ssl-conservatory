@@ -1,17 +1,17 @@
 /*
- * Sample HTTPS client to demonstrate how to do proper certificate validation.
- * This client will securely connect to www.google.com:443 and print the server's 
- * response to an HTTP GET / request.
+ * Sample HTTPS client to demonstrate how to do certificate validation using 
+ * OpenSSL.
+ * This client will securely connect to www.google.com:443 and print the 
+ * server's response to an HTTP GET request.
  *
  * Please read "everything-you-wanted-to-know-about-openssl.pdf" before
- * attempting to use this code. This paper describes how the code works, 
+ * attempting to use this code. This whitepaper describes how the code works, 
  * how it should be used, and what its limitations are.
  *
  * Author:  Alban Diquet
- * License: See LICENSE.txt
+ * License: See LICENSE
  *
  */
- 
 
 #include <stdio.h>
 #include <openssl/ssl.h>

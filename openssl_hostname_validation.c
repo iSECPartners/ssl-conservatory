@@ -2,11 +2,11 @@
  * Helper functions to perform basic hostname validation using OpenSSL.
  *
  * Please read "everything-you-wanted-to-know-about-openssl.pdf" before
- * attempting to use this code. This paper describes how the code works, 
+ * attempting to use this code. This whitepaper describes how the code works, 
  * how it should be used, and what its limitations are.
  *
  * Author:  Alban Diquet
- * License: See LICENSE.txt
+ * License: See LICENSE
  *
  */
  
