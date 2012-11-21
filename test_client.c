@@ -57,7 +57,6 @@ int main(int argc, char *argv[]) {
 	X509 *server_cert;
 
 	// Initialize OpenSSL
-	OpenSSL_add_all_algorithms();
 	SSL_library_init();
 	SSL_load_error_strings();
 
