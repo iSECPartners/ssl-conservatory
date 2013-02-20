@@ -1,6 +1,7 @@
 The SSL Conservatory: iOS Certificate pinning
 =============================================
 
+
 ### SSL pinning
 
 When an iOS app only needs to communicate to a well-defined set of servers
@@ -10,7 +11,8 @@ server's certificate chain, the threat of a rogue CA or a CA compromise is
 significantly reduced.
 
 The following blog post provides more information regarding SSL pinning on
-iOS: XXX
+iOS: https://www.isecpartners.com/news-events/news/2013/february/ssl-pinning.aspx
+
 
 ### The SSLCertificatePinning class
 
@@ -47,6 +49,7 @@ delegate for NSURLConnection objects. This class implements the
 connection:willSendRequestForAuthenticationChallenge: method so that it
 automatically validates that the certificate pinned to the domain the
 NSURLConnection object is accessing is part of the server's certificate chain.
+
 
 ### Author
 

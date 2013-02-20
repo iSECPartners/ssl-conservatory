@@ -9,6 +9,7 @@ This is intended to be a clearinghouse for well-documented and secure sample
 code to correctly implement SSL clients. Pull requests with examples for
 other languages or frameworks are encouraged.
 
+
 Content
 -------
 
@@ -19,6 +20,7 @@ SSL client using the OpenSSL library.
 
 ### ios/ 
 SSL certificate pinning implementation for iOS applications.
+
 
 License
 -------
