@@ -1,12 +1,6 @@
-//
-//  TestSSLCertificatePinning.m
-//  SSL Certificate Pinning
-//
-//  Created by Alban Diquet on 1/31/13.
-//  Copyright (c) 2013 iSEC Partners. All rights reserved.
-//
 
 #import "TestSSLCertificatePinning.h"
+
 
 #pragma mark Test Cases
 @implementation TestSSLCertificatePinning
@@ -33,7 +27,7 @@
     }
     [domainsToPin setObject:isecCertData forKey:@"www.isecpartners.com"];
     
-    // For NCC group, we pin an invalid certificate(Twitter's)
+    // For NCC group, we pin an invalid certificate (Twitter's)
     [domainsToPin setObject:twitterCertData forKey:@"www.nccgroup.com"];
     
     

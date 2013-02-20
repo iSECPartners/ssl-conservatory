@@ -2,7 +2,6 @@
 #import <Foundation/Foundation.h>
 
 
-
 /** This class implements certificate pinning utility functions.
  
  First, the certificates and domains to pin should be loaded using

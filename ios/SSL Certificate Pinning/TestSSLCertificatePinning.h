@@ -1,10 +1,3 @@
-//
-//  TestSSLCertificatePinning.h
-//  SSL Certificate Pinning
-//
-//  Created by Alban Diquet on 1/31/13.
-//  Copyright (c) 2013 iSEC Partners. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 #import "SSLCertificatePinning.h"
