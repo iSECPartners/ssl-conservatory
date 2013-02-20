@@ -1,4 +1,4 @@
-The SSL Conservatory: iOS Certificate pinning
+The SSL Conservatory: iOS Certificate Pinning
 =============================================
 
 
