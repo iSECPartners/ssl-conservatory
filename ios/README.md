@@ -31,12 +31,12 @@ certificate can be pushed to users by releasing a new version of the iOS app.
 
 The SSLCertificatePinning API exposes two methods and a convenience class:
 
-* + (BOOL)loadSSLPinsFromDERCertificates:(NSDictionary*)certificates
+* +(BOOL)loadSSLPinsFromDERCertificates:(NSDictionary*)certificates
 This method takes a dictionary with domain names as keys and DER-encoded
 certificates as values and stores them in a pre-defined location on the
 filesystem.
 
-* + (BOOL)verifyPinnedCertificateForTrust:(SecTrustRef)trust andDomain:(NSString*)domain
+* +(BOOL)verifyPinnedCertificateForTrust:(SecTrustRef)trust andDomain:(NSString*)domain
 This method accesses the certificates previously loaded using the
 loadSSLPinsFromDERCertificates: method and looks in the trust object's
 certificate chain for a certificate pinned to the given domain.
