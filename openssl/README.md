@@ -35,9 +35,9 @@ validating certificate chains; this behavior cannot be changed. Therefore,
 specifying a trust store using SSL_CTX_load_verify_locations() will always be
 ignored on OS X.
 
-Additionally, compiling the code on OS X will generate a lot of "is deprecated"
-warnings. This is because Apple is migrating from OpenSSL to the Common Crypto
-framework.
+Additionally, compiling the code on OS X will generate a lot of "is
+deprecated" warnings because Apple is migrating from OpenSSL to the Common
+Crypto framework.
 
 
 ### Windows
