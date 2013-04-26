@@ -50,10 +50,13 @@ the following URL: http://www.openssl.org/related/binaries.html
 If you used those binaries, here are additional instructions to compile the
 sample code:
 
-Copy <OpenSSL_Folder>/include/ to <MinGW_Folder>/include/
-Copy <OpenSSL_Folder>/libeay32.dll to <MinGW_Folder>/lib/libeay32.dll
-Copy <OpenSSL_Folder>/libssl32.dll to <MinGW_Folder>/lib/libssl32.dll
+First add the OpenSSL headers and libraries to MinGW:
+
+    Copy <OpenSSL_Folder>/include/ to <MinGW_Folder>/include/
+    Copy <OpenSSL_Folder>/libeay32.dll to <MinGW_Folder>/lib/libeay32.dll
+    Copy <OpenSSL_Folder>/libssl32.dll to <MinGW_Folder>/lib/libssl32.dll
 
 Then compile the test_client: 
+
     make -f Makefile_mingw
 
