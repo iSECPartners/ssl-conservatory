@@ -11,7 +11,7 @@ server's certificate chain, the threat of a rogue CA or a CA compromise is
 significantly reduced.
 
 The following blog post provides more information regarding SSL pinning on
-iOS: https://www.isecpartners.com/news-events/news/2013/february/ssl-pinning.aspx
+iOS: https://www.isecpartners.com/news-events/news/2013/february/ssl-pinning-on-ios.aspx
 
 
 ### The SSLCertificatePinning class
