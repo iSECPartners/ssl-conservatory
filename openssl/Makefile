@@ -6,7 +6,7 @@ LDFLAGS=-lcrypto -lssl
 all: test_client
 
 test_client: test_client.o openssl_hostname_validation.o
-	$(CC) $(LDFLAGS) test_client.o openssl_hostname_validation.o -o test_client
+	$(CC) test_client.o openssl_hostname_validation.o -o test_client $(LDFLAGS)
 
 clean:
 	rm -rf *.o test_client
