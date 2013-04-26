@@ -1,7 +1,7 @@
 # Tested on Windows 7 with MinGW-w64
 CC=gcc
 CFLAGS=-c -Wall
-LDFLAGS= -leay32 -lssleay32
+LDFLAGS= -leay32 -lssl32
 
 all: test_client
 

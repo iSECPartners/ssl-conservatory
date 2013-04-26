@@ -47,4 +47,13 @@ The code was compiled using minGW and tested on Windows 7.
 You will have to install minGW as well as the OpenSSL development libraries.
 The OpenSSL project provides a link to pre-compiled libraries for Windows at
 the following URL: http://www.openssl.org/related/binaries.html
+If you used those binaries, here are additional instructions to compile the
+sample code:
+
+Copy <OpenSSL_Folder>/include/ to <MinGW_Folder>/include/
+Copy <OpenSSL_Folder>/libeay32.dll to <MinGW_Folder>/lib/libeay32.dll
+Copy <OpenSSL_Folder>/libssl32.dll to <MinGW_Folder>/lib/libssl32.dll
+
+Then compile the test_client: 
+    make -f Makefile_mingw
 
