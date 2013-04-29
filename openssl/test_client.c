@@ -1,7 +1,7 @@
 /*
  * Sample HTTPS client to demonstrate how to do certificate validation using 
  * OpenSSL.
- * This client will securely connect to www.google.com:443 and print the 
+ * This client will securely connect to www.isecpartners.com:443 and print the 
  * server's response to an HTTP GET request.
  *
  * Please read "everything-you-wanted-to-know-about-openssl.pdf" before
@@ -21,12 +21,12 @@
 #include "openssl_hostname_validation.h"
 
 
-// Sample SSL client for https://www.google.com
-#define TARGET_HOST "www.google.com"
+// Sample SSL client for https://www.isecpartners.com
+#define TARGET_HOST "www.isecpartners.com"
 #define TARGET_PORT "443"
 
-// CA certificate that signed www.google.com's certificate
-#define TRUSTED_CA_PATHNAME "VerisignClass3PublicPrimaryCertificationAuthority.pem"
+// CA certificate that signed www.isecpartners.com's certificate
+#define TRUSTED_CA_PATHNAME "DigiCertHighAssuranceEVRootCA.pem"
 
 
 
