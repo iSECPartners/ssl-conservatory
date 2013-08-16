@@ -11,24 +11,33 @@
     // Build our dictionnary of domain => certificates
     NSMutableDictionary *domainsToPin = [[NSMutableDictionary alloc] init];
     
+    
     // For Twitter, we pin the anchor/CA certificate
     NSData *twitterCertData = [TestSSLCertificatePinning loadCertificateFromFile:@"VeriSignClass3PublicPrimaryCertificationAuthority-G5.der"];
     if (twitterCertData == nil) {
-        NSLog(@"Failed to load the certificates");
+        NSLog(@"Failed to load a certificate");
         return;
     }
-    [domainsToPin setObject:twitterCertData forKey:@"twitter.com"];
+    NSArray *twitterTrustedCerts = [NSArray arrayWithObject:twitterCertData];
+    [domainsToPin setObject:twitterTrustedCerts forKey:@"twitter.com"];
+    
     
     // For iSEC, we pin the server/leaf certificate
     NSData *isecCertData = [TestSSLCertificatePinning loadCertificateFromFile:@"www.isecpartners.com.der"];
     if (isecCertData == nil) {
-        NSLog(@"Failed to load the certificates");
+        NSLog(@"Failed to load a certificate");
         return;
     }
-    [domainsToPin setObject:isecCertData forKey:@"www.isecpartners.com"];
+    // We pin the same cert twice just to show that you can pin multiple certs to a single domain
+    // This is useful when transitioning between two certificates on the server
+    // The connection will be succesful if at least one of the pinned certs is found in the server's certificate trust chain
+    NSArray *iSECTrustedCerts = [NSArray arrayWithObjects:isecCertData, isecCertData, nil];
+    [domainsToPin setObject:iSECTrustedCerts forKey:@"www.isecpartners.com"];
+    
     
     // For NCC group, we pin an invalid certificate (Twitter's)
-    [domainsToPin setObject:twitterCertData forKey:@"www.nccgroup.com"];
+    NSArray *NCCTrustedCerts = [NSArray array ];//WithObject:twitterCertData];
+    [domainsToPin setObject:NCCTrustedCerts forKey:@"www.nccgroup.com"];
     
     
     // Save the SSL pins

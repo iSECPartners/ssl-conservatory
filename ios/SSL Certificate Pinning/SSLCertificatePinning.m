@@ -50,47 +50,52 @@
         return NO;
     }
     
-    // Do we have a certificate pinned for that domain ?
-    NSData *pinnedCertificate = [SSLPinsDict objectForKey:domain];
-    if (pinnedCertificate == nil) {
+    // Do we have certificates pinned for this domain ?
+    NSArray *trustedCertificates = [SSLPinsDict objectForKey:domain];
+    if ((trustedCertificates == nil) || ([trustedCertificates count] < 1)) {
         return NO;
     }
     
-    // Check each certificate in the trust object
-    // Unfortunately the anchor/CA certificate cannot be accessed this way
-    CFIndex certsNb = SecTrustGetCertificateCount(trust);
-    for(int i=0;i<certsNb;i++) {
+    // For each pinned certificate, check if it is part of the server's cert trust chain
+    // We only need one of the pinned certificates to be in the server's trust chain
+    for (NSData *pinnedCertificate in trustedCertificates) {
+    
+        // Check each certificate in the server's trust chain (the trust object)
+        // Unfortunately the anchor/CA certificate cannot be accessed this way
+        CFIndex certsNb = SecTrustGetCertificateCount(trust);
+        for(int i=0;i<certsNb;i++) {
+            
+            // Extract the certificate
+            SecCertificateRef certificate = SecTrustGetCertificateAtIndex(trust, i);
+            NSData* DERCertificate = (__bridge NSData*) SecCertificateCopyData(certificate);
+            
+            // Compare the two certificates
+            if ([pinnedCertificate isEqualToData:DERCertificate]) {
+                return YES;
+            }
+        }
         
-        // Extract the certificate
-        SecCertificateRef certificate = SecTrustGetCertificateAtIndex(trust, i);
-        NSData* DERCertificate = (__bridge NSData*) SecCertificateCopyData(certificate);
+        // Check the anchor/CA certificate separately
+        SecCertificateRef anchorCertificate = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)(pinnedCertificate));
+        if (anchorCertificate == NULL) {
+            break;
+        }
         
-        // Compare the two certificates
-        if ([pinnedCertificate isEqualToData:DERCertificate]) {
+        NSArray *anchorArray = [NSArray arrayWithObject:(__bridge id)(anchorCertificate)];
+        if (SecTrustSetAnchorCertificates(trust, (__bridge CFArrayRef)(anchorArray)) != 0) {
+            CFRelease(anchorCertificate);
+            break;
+        }
+        
+        SecTrustResultType trustResult;
+        SecTrustEvaluate(trust, &trustResult);
+        if (trustResult == kSecTrustResultUnspecified) {
+            // The anchor certificate was pinned
+            CFRelease(anchorCertificate);
             return YES;
         }
-    }
-    
-    // Check the anchor/CA certificate separately
-    SecCertificateRef anchorCertificate = SecCertificateCreateWithData(NULL, (__bridge CFDataRef)(pinnedCertificate));
-    if (anchorCertificate == NULL) {
-        return NO;
-    }
-
-    NSArray *anchorArray = [NSArray arrayWithObject:(__bridge id)(anchorCertificate)];
-    if (SecTrustSetAnchorCertificates(trust, (__bridge CFArrayRef)(anchorArray)) != 0) {
         CFRelease(anchorCertificate);
-        return NO;
     }
-    
-    SecTrustResultType trustResult;
-    SecTrustEvaluate(trust, &trustResult);
-    if (trustResult == kSecTrustResultUnspecified) {
-        // The anchor certificate was pinned
-        CFRelease(anchorCertificate);
-        return YES;
-    }
-    CFRelease(anchorCertificate);
     
     // If we get here, we didn't find any matching certificate in the chain
     return NO;
