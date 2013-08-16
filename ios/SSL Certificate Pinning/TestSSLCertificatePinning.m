@@ -36,7 +36,7 @@
     
     
     // For NCC group, we pin an invalid certificate (Twitter's)
-    NSArray *NCCTrustedCerts = [NSArray array ];//WithObject:twitterCertData];
+    NSArray *NCCTrustedCerts = [NSArray arrayWithObject:twitterCertData];
     [domainsToPin setObject:NCCTrustedCerts forKey:@"www.nccgroup.com"];
     
     
