@@ -1,5 +1,13 @@
+//
+//  ISPSSLCertificatePinning.h
+//  ISPSSLCertificatePinning
+//
+//  Created by Alban Diquet on 1/14/14.
+//  Copyright (c) 2014 iSEC Partners. All rights reserved.
+//
 
 #import <Foundation/Foundation.h>
+
 
 
 /** This class implements certificate pinning utility functions.
@@ -9,8 +17,8 @@
  ""~/Library/SSLPins.plist".
  
  Then, the verifyPinnedCertificateForTrust:andDomain: method can be
- used to validate that at least one the certificates pinned to a 
- specific domain is in the server's certificate chain when connecting to 
+ used to validate that at least one the certificates pinned to a
+ specific domain is in the server's certificate chain when connecting to
  it. This method should be used in the
  connection:willSendRequestForAuthenticationChallenge: method of the
  NSURLConnectionDelegate object that is used to perform the connection.
@@ -19,7 +27,7 @@
  used instead as the connection delegate.
  
  */
-@interface SSLCertificatePinning : NSObject
+@interface ISPSSLCertificatePinning : NSObject
 
 
 /**
@@ -52,21 +60,5 @@
  
  */
 + (BOOL)verifyPinnedCertificateForTrust:(SecTrustRef)trust andDomain:(NSString*)domain;
-
-@end
-
-
-/** Convenience class to automatically perform certificate pinning.
- 
- SSLPinnedNSURLConnectionDelegate is designed to be subclassed in order to
- implement an NSURLConnectionDelegate class. The
- connection:willSendRequestForAuthenticationChallenge: method it implements
- will automatically validate that at least one the certificates pinned to the domain the
- connection is accessing is part of the server's certificate chain.
- 
- */
-@interface SSLPinnedNSURLConnectionDelegate : NSObject
-
-- (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 
 @end
