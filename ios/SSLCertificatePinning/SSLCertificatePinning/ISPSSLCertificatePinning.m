@@ -17,7 +17,7 @@
 
 
 
-+ (BOOL)loadSSLPinsFromDERCertificates:(NSDictionary*)certificates {
++ (BOOL)storeSSLPinsFromDERCertificates:(NSDictionary*)certificates {
     if (certificates == nil) {
         return NO;
     }
