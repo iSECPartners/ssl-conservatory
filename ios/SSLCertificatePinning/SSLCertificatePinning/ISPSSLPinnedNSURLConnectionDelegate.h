@@ -11,7 +11,7 @@
 
 /** Convenience class to automatically perform certificate pinning for NSURLConnection.
  
- ISPSslPinnedNSURLConnectionDelegate is designed to be subclassed in order to
+ ISPSSLPinnedNSURLConnectionDelegate is designed to be subclassed in order to
  implement an NSURLConnectionDelegate class. The
  connection:willSendRequestForAuthenticationChallenge: method it implements
  will automatically validate that at least one the certificates pinned to the domain the
