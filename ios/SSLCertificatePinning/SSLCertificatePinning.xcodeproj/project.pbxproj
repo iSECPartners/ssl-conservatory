@@ -17,6 +17,7 @@
 		8C40DA56188600A600A231CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8C40DA54188600A600A231CD /* InfoPlist.strings */; };
 		8C40DA58188600A600A231CD /* SSLCertificatePinningTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA57188600A600A231CD /* SSLCertificatePinningTests.m */; };
 		8C40DA631886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA621886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.m */; };
+		8C40DA661886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA651886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		8C40DA57188600A600A231CD /* SSLCertificatePinningTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSLCertificatePinningTests.m; sourceTree = "<group>"; };
 		8C40DA611886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISPSSLPinnedNSURLConnectionDelegate.h; sourceTree = "<group>"; };
 		8C40DA621886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISPSSLPinnedNSURLConnectionDelegate.m; sourceTree = "<group>"; };
+		8C40DA641886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISPSSLPinnedNSURLSessionDelegate.h; sourceTree = "<group>"; };
+		8C40DA651886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISPSSLPinnedNSURLSessionDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,8 @@
 				8C40DA42188600A600A231CD /* ISPSSLCertificatePinning.m */,
 				8C40DA3E188600A600A231CD /* Supporting Files */,
 				8C40DA611886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.h */,
+				8C40DA641886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.h */,
+				8C40DA651886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.m */,
 				8C40DA621886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.m */,
 			);
 			path = SSLCertificatePinning;
@@ -231,6 +236,7 @@
 			files = (
 				8C40DA43188600A600A231CD /* ISPSSLCertificatePinning.m in Sources */,
 				8C40DA631886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.m in Sources */,
+				8C40DA661886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
