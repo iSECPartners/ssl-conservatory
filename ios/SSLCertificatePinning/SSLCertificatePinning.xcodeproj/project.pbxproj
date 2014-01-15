@@ -20,6 +20,7 @@
 		8C40DA661886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA651886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.m */; };
 		8C40DA681886071000A231CD /* NSURLConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA671886071000A231CD /* NSURLConnectionTests.m */; };
 		8C40DA6A1886071C00A231CD /* NSURLSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA691886071C00A231CD /* NSURLSessionTests.m */; };
+		8C40DA6D1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der in Resources */ = {isa = PBXBuildFile; fileRef = 8C40DA6C1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		8C40DA651886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISPSSLPinnedNSURLSessionDelegate.m; sourceTree = "<group>"; };
 		8C40DA671886071000A231CD /* NSURLConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLConnectionTests.m; sourceTree = "<group>"; };
 		8C40DA691886071C00A231CD /* NSURLSessionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionTests.m; sourceTree = "<group>"; };
+		8C40DA6C1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VeriSignClass3PublicPrimaryCertificationAuthority-G5.der"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 		8C40DA51188600A600A231CD /* SSLCertificatePinningTests */ = {
 			isa = PBXGroup;
 			children = (
+				8C40DA6C1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der */,
 				8C40DA57188600A600A231CD /* SSLCertificatePinningTests.m */,
 				8C40DA671886071000A231CD /* NSURLConnectionTests.m */,
 				8C40DA691886071C00A231CD /* NSURLSessionTests.m */,
@@ -229,6 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C40DA6D1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der in Resources */,
 				8C40DA56188600A600A231CD /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
