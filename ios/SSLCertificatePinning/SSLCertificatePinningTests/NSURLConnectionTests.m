@@ -47,10 +47,6 @@
 
 #pragma mark SSL pinning test
 
-#define POLL_INTERVAL 0.2 // 200ms
-#define N_SEC_TO_POLL 3.0 // poll for 3s
-#define MAX_POLL_COUNT N_SEC_TO_POLL / POLL_INTERVAL
-
 
 // This is sample code to demonstrate how to implement certificate pinning with NSURLConnection
 - (void)testNSURLConnectionSSLPinning
@@ -111,11 +107,12 @@
     
     
     // Do some polling to wait for the connections to complete
+#define POLL_INTERVAL 0.2 // 200ms
+#define N_SEC_TO_POLL 3.0 // poll for 3s
+#define MAX_POLL_COUNT N_SEC_TO_POLL / POLL_INTERVAL
+    
     NSUInteger pollCount = 0;
-    while ((connectionDelegate.connectionSucceeded == NO)
-           && (connectionDelegate2.connectionSucceeded == NO)
-           && (connectionDelegate3.connectionSucceeded == NO)
-           && (pollCount < MAX_POLL_COUNT)) {
+    while (!(connectionDelegate.connectionFinished && connectionDelegate2.connectionFinished && connectionDelegate3.connectionFinished) && (pollCount < MAX_POLL_COUNT)) {
         NSDate* untilDate = [NSDate dateWithTimeIntervalSinceNow:POLL_INTERVAL];
         [[NSRunLoop currentRunLoop] runUntilDate:untilDate];
         pollCount++;
@@ -158,10 +155,12 @@
 
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    self.connectionSucceeded = YES;
     self.connectionFinished = YES;
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    self.connectionSucceeded = NO;
     self.connectionFinished = YES;
 }
 
