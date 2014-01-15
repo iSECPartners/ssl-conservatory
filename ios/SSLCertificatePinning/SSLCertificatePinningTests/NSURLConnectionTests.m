@@ -14,7 +14,8 @@
 
 // Delegate we'll use for our tests
 @interface NSURLConnectionDelegateTest : ISPSSLPinnedNSURLConnectionDelegate <NSURLConnectionDelegate>
-
+    @property BOOL connectionFinished;
+    @property BOOL connectionSucceeded;
 @end
 
 
@@ -23,7 +24,16 @@
 
 @end
 
+
 @implementation NSURLConnectionTests
+
+
++ (NSData*)loadCertificateFromFile:(NSString*)fileName {
+    NSString *certPath =  [[NSBundle bundleForClass:[self class]] pathForResource:fileName ofType:@"der"];
+    NSData *certData = [[NSData alloc] initWithContentsOfFile:certPath];
+    return certData;
+}
+
 
 - (void)setUp
 {
@@ -35,16 +45,14 @@
     [super tearDown];
 }
 
-
-+ (NSData*)loadCertificateFromFile:(NSString*)fileName {
-    NSString *certPath = [[NSString alloc] initWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], fileName];
-    NSData *certData = [[NSData alloc] initWithContentsOfFile:certPath];
-    return certData;
-}
-
-
 #pragma mark SSL pinning test
 
+#define POLL_INTERVAL 0.2 // 200ms
+#define N_SEC_TO_POLL 3.0 // poll for 3s
+#define MAX_POLL_COUNT N_SEC_TO_POLL / POLL_INTERVAL
+
+
+// This is sample code to demonstrate how to implement certificate pinning with NSURLConnection
 - (void)testNSURLConnectionSSLPinning
 {
 
@@ -53,20 +61,18 @@
     
     
     // For Twitter, we pin the anchor/CA certificate
-    NSData *twitterCertData = [NSURLConnectionTests loadCertificateFromFile:@"VeriSignClass3PublicPrimaryCertificationAuthority-G5.der"];
+    NSData *twitterCertData = [NSURLConnectionTests loadCertificateFromFile:@"VeriSignClass3PublicPrimaryCertificationAuthority-G5"];
     if (twitterCertData == nil) {
         NSLog(@"Failed to load a certificate");
-        return;
     }
     NSArray *twitterTrustedCerts = [NSArray arrayWithObject:twitterCertData];
     [domainsToPin setObject:twitterTrustedCerts forKey:@"twitter.com"];
     
     
     // For iSEC, we pin the server/leaf certificate
-    NSData *isecCertData = [NSURLConnectionTests loadCertificateFromFile:@"www.isecpartners.com.der"];
+    NSData *isecCertData = [NSURLConnectionTests loadCertificateFromFile:@"www.isecpartners.com"];
     if (isecCertData == nil) {
         NSLog(@"Failed to load a certificate");
-        return;
     }
     // We pin the same cert twice just to show that you can pin multiple certs to a single domain
     // This is useful when transitioning between two certificates on the server
@@ -83,29 +89,49 @@
     // Save the SSL pins
     if ([ISPSSLCertificatePinning storeSSLPinsFromDERCertificates:domainsToPin] != YES) {
         NSLog(@"Failed to pin the certificates");
-        return;
     }
     
     // Connect to Twitter
-    NSLog(@"Connecting to www.twitter.com");
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://twitter.com/"]];
     NSURLConnectionDelegateTest *connectionDelegate = [[NSURLConnectionDelegateTest alloc] init];
     NSURLConnection *connection=[[NSURLConnection alloc] initWithRequest:request delegate:connectionDelegate];
     [connection start];
     
     // Connect to iSEC
-    NSLog(@"Connecting to www.isecpartners.com");
     NSURLRequest *request2 = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.isecpartners.com/"]];
     NSURLConnectionDelegateTest *connectionDelegate2 = [[NSURLConnectionDelegateTest alloc] init];
     NSURLConnection *connection2 = [[NSURLConnection alloc] initWithRequest:request2 delegate:connectionDelegate2];
     [connection2 start];
     
     // Connect to NCC Group => will fail
-    NSLog(@"Connecting to www.nccgroup.com");
     NSURLRequest *request3 = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.nccgroup.com/"]];
     NSURLConnectionDelegateTest *connectionDelegate3 = [[NSURLConnectionDelegateTest alloc] init];
     NSURLConnection *connection3 = [[NSURLConnection alloc] initWithRequest:request3 delegate:connectionDelegate3];
     [connection3 start];
+    
+    
+    // Do some polling to wait for the connections to complete
+    NSUInteger pollCount = 0;
+    while ((connectionDelegate.connectionSucceeded == NO)
+           && (connectionDelegate2.connectionSucceeded == NO)
+           && (connectionDelegate3.connectionSucceeded == NO)
+           && (pollCount < MAX_POLL_COUNT)) {
+        NSDate* untilDate = [NSDate dateWithTimeIntervalSinceNow:POLL_INTERVAL];
+        [[NSRunLoop currentRunLoop] runUntilDate:untilDate];
+        pollCount++;
+    }
+    
+    if (pollCount == MAX_POLL_COUNT) {
+        XCTFail(@"Could not connect in time");
+    }
+    
+    
+    // The first two connections should succeed
+    XCTAssertTrue(connectionDelegate.connectionSucceeded, @"Connection to Twitter failed");
+    XCTAssertTrue(connectionDelegate2.connectionSucceeded, @"Connection to iSEC Partners failed");
+    
+    // The last connection should fail
+    XCTAssertFalse(connectionDelegate3.connectionSucceeded, @"Connection to NCC succeeded");
 }
 
 
@@ -118,16 +144,30 @@
 
 @implementation NSURLConnectionDelegateTest
 
+@synthesize connectionSucceeded;
+@synthesize connectionFinished;
+
+-(instancetype) init {
+    if (self = [super init])
+    {
+        self.connectionSucceeded = NO;
+        self.connectionFinished = NO;
+    }
+    return self;
+}
+
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    
+    self.connectionFinished = YES;
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"NSURLConnectionDelegateTest - failed: %@", error);
+    self.connectionFinished = YES;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSLog(@"NSURLConnectionDelegateTest - received %d bytes", [data length]);
+    self.connectionSucceeded = YES;
+    self.connectionFinished = YES;
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {
@@ -135,7 +175,8 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    NSLog(@"NSURLConnectionDelegateTest - success: %@", [[response URL] host]);
+    self.connectionSucceeded = YES;
+    self.connectionFinished = YES;
 }
 
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse {

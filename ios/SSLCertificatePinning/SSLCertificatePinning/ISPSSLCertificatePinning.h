@@ -23,8 +23,9 @@
  connection:willSendRequestForAuthenticationChallenge: method of the
  NSURLConnectionDelegate object that is used to perform the connection.
  
- Alternatively, the SSLPinnedNSURLConnectionDelegate class can be
- used instead as the connection delegate.
+ Alternatively, the ISPSSLPinnedNSURLSessionDelegate or 
+ ISPSSLPinnedNSURLConnectionDelegate classes can be directly used 
+ to create a delegate class performing certificate pinning.
  
  */
 @interface ISPSSLCertificatePinning : NSObject

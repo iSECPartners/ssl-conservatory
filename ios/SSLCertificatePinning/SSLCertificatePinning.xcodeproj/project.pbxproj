@@ -15,12 +15,12 @@
 		8C40DA4D188600A600A231CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C40DA4C188600A600A231CD /* UIKit.framework */; };
 		8C40DA50188600A600A231CD /* libSSLCertificatePinning.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C40DA38188600A600A231CD /* libSSLCertificatePinning.a */; };
 		8C40DA56188600A600A231CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8C40DA54188600A600A231CD /* InfoPlist.strings */; };
-		8C40DA58188600A600A231CD /* SSLCertificatePinningTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA57188600A600A231CD /* SSLCertificatePinningTests.m */; };
 		8C40DA631886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA621886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.m */; };
 		8C40DA661886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA651886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.m */; };
 		8C40DA681886071000A231CD /* NSURLConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA671886071000A231CD /* NSURLConnectionTests.m */; };
 		8C40DA6A1886071C00A231CD /* NSURLSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA691886071C00A231CD /* NSURLSessionTests.m */; };
 		8C40DA6D1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der in Resources */ = {isa = PBXBuildFile; fileRef = 8C40DA6C1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der */; };
+		8C40DA6F1886142800A231CD /* www.isecpartners.com.der in Resources */ = {isa = PBXBuildFile; fileRef = 8C40DA6E1886142800A231CD /* www.isecpartners.com.der */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +57,6 @@
 		8C40DA4C188600A600A231CD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		8C40DA53188600A600A231CD /* SSLCertificatePinningTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SSLCertificatePinningTests-Info.plist"; sourceTree = "<group>"; };
 		8C40DA55188600A600A231CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8C40DA57188600A600A231CD /* SSLCertificatePinningTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SSLCertificatePinningTests.m; sourceTree = "<group>"; };
 		8C40DA611886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISPSSLPinnedNSURLConnectionDelegate.h; sourceTree = "<group>"; };
 		8C40DA621886017400A231CD /* ISPSSLPinnedNSURLConnectionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISPSSLPinnedNSURLConnectionDelegate.m; sourceTree = "<group>"; };
 		8C40DA641886045C00A231CD /* ISPSSLPinnedNSURLSessionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISPSSLPinnedNSURLSessionDelegate.h; sourceTree = "<group>"; };
@@ -65,6 +64,7 @@
 		8C40DA671886071000A231CD /* NSURLConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLConnectionTests.m; sourceTree = "<group>"; };
 		8C40DA691886071C00A231CD /* NSURLSessionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionTests.m; sourceTree = "<group>"; };
 		8C40DA6C1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VeriSignClass3PublicPrimaryCertificationAuthority-G5.der"; sourceTree = "<group>"; };
+		8C40DA6E1886142800A231CD /* www.isecpartners.com.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = www.isecpartners.com.der; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,8 +144,8 @@
 		8C40DA51188600A600A231CD /* SSLCertificatePinningTests */ = {
 			isa = PBXGroup;
 			children = (
+				8C40DA6E1886142800A231CD /* www.isecpartners.com.der */,
 				8C40DA6C1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der */,
-				8C40DA57188600A600A231CD /* SSLCertificatePinningTests.m */,
 				8C40DA671886071000A231CD /* NSURLConnectionTests.m */,
 				8C40DA691886071C00A231CD /* NSURLSessionTests.m */,
 				8C40DA52188600A600A231CD /* Supporting Files */,
@@ -233,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C40DA6D1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der in Resources */,
+				8C40DA6F1886142800A231CD /* www.isecpartners.com.der in Resources */,
 				8C40DA56188600A600A231CD /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,7 +257,6 @@
 			files = (
 				8C40DA681886071000A231CD /* NSURLConnectionTests.m in Sources */,
 				8C40DA6A1886071C00A231CD /* NSURLSessionTests.m in Sources */,
-				8C40DA58188600A600A231CD /* SSLCertificatePinningTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
