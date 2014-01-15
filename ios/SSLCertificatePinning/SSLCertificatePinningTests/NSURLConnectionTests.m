@@ -70,10 +70,10 @@
     if (isecCertData == nil) {
         NSLog(@"Failed to load a certificate");
     }
-    // We pin the same cert twice just to show that you can pin multiple certs to a single domain
+    // We also pin Twitter's CA cert just to show that you can pin multiple certs to a single domain
     // This is useful when transitioning between two certificates on the server
     // The connection will be succesful if at least one of the pinned certs is found in the server's certificate trust chain
-    NSArray *iSECTrustedCerts = [NSArray arrayWithObjects:isecCertData, isecCertData, nil];
+    NSArray *iSECTrustedCerts = [NSArray arrayWithObjects:isecCertData, twitterCertData, nil];
     [domainsToPin setObject:iSECTrustedCerts forKey:@"www.isecpartners.com"];
     
     
