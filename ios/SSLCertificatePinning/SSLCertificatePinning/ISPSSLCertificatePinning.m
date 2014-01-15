@@ -17,14 +17,14 @@
 
 
 
-+ (BOOL)storeSSLPinsFromDERCertificates:(NSDictionary*)certificates {
-    if (certificates == nil) {
++ (BOOL)setupSSLPinsUsingDictionnary:(NSDictionary*)domainsAndCertificates {
+    if (domainsAndCertificates == nil) {
         return NO;
     }
     
     // Serialize the dictionary to a plist
     NSError *error;
-    NSData *plistData = [NSPropertyListSerialization dataWithPropertyList:certificates
+    NSData *plistData = [NSPropertyListSerialization dataWithPropertyList:domainsAndCertificates
                                                                    format:NSPropertyListXMLFormat_v1_0
                                                                   options:0
                                                                     error:&error];

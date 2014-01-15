@@ -13,8 +13,8 @@
 /** This class implements certificate pinning utility functions.
  
  First, the certificates and domains to pin should be loaded using
- storeSSLPinsFromDERCertificates:. This method will store them in
- ""~/Library/SSLPins.plist".
+ setupSSLPinsUsingDictionnary:. This method will store them in
+ "~/Library/SSLPins.plist".
  
  Then, the verifyPinnedCertificateForTrust:andDomain: method can be
  used to validate that at least one the certificates pinned to a
@@ -43,7 +43,7 @@
  @return BOOL successfully loaded the public keys and domains
  
  */
-+ (BOOL)storeSSLPinsFromDERCertificates:(NSDictionary*)certificates;
++ (BOOL)setupSSLPinsUsingDictionnary:(NSDictionary*)domainsAndCertificates;
 
 
 /**

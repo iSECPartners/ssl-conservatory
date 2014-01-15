@@ -83,7 +83,7 @@
     
     
     // Save the SSL pins
-    if ([ISPSSLCertificatePinning storeSSLPinsFromDERCertificates:domainsToPin] != YES) {
+    if ([ISPSSLCertificatePinning setupSSLPinsUsingDictionnary:domainsToPin] != YES) {
         NSLog(@"Failed to pin the certificates");
     }
     
