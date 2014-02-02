@@ -21,6 +21,7 @@
 		8C40DA6A1886071C00A231CD /* NSURLSessionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C40DA691886071C00A231CD /* NSURLSessionTests.m */; };
 		8C40DA6D1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der in Resources */ = {isa = PBXBuildFile; fileRef = 8C40DA6C1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der */; };
 		8C40DA6F1886142800A231CD /* www.isecpartners.com.der in Resources */ = {isa = PBXBuildFile; fileRef = 8C40DA6E1886142800A231CD /* www.isecpartners.com.der */; };
+		8CC9C1F9189EF097000525D6 /* SSLPinsTestUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CC9C1F8189EF097000525D6 /* SSLPinsTestUtility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		8C40DA691886071C00A231CD /* NSURLSessionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionTests.m; sourceTree = "<group>"; };
 		8C40DA6C1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VeriSignClass3PublicPrimaryCertificationAuthority-G5.der"; sourceTree = "<group>"; };
 		8C40DA6E1886142800A231CD /* www.isecpartners.com.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = www.isecpartners.com.der; sourceTree = "<group>"; };
+		8CC9C1F7189EF097000525D6 /* SSLPinsTestUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSLPinsTestUtility.h; sourceTree = "<group>"; };
+		8CC9C1F8189EF097000525D6 /* SSLPinsTestUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSLPinsTestUtility.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +151,8 @@
 				8C40DA6C1886080800A231CD /* VeriSignClass3PublicPrimaryCertificationAuthority-G5.der */,
 				8C40DA671886071000A231CD /* NSURLConnectionTests.m */,
 				8C40DA691886071C00A231CD /* NSURLSessionTests.m */,
+				8CC9C1F7189EF097000525D6 /* SSLPinsTestUtility.h */,
+				8CC9C1F8189EF097000525D6 /* SSLPinsTestUtility.m */,
 				8C40DA52188600A600A231CD /* Supporting Files */,
 			);
 			path = SSLCertificatePinningTests;
@@ -257,6 +262,7 @@
 			files = (
 				8C40DA681886071000A231CD /* NSURLConnectionTests.m in Sources */,
 				8C40DA6A1886071C00A231CD /* NSURLSessionTests.m in Sources */,
+				8CC9C1F9189EF097000525D6 /* SSLPinsTestUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +439,7 @@
 				8C40DA5D188600A600A231CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8C40DA5E188600A600A231CD /* Build configuration list for PBXNativeTarget "SSLCertificatePinningTests" */ = {
 			isa = XCConfigurationList;
@@ -441,6 +448,7 @@
 				8C40DA60188600A600A231CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

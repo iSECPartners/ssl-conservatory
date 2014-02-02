@@ -10,6 +10,7 @@
 
 #import "ISPSSLPinnedNSURLConnectionDelegate.h"
 #import "ISPSSLCertificatePinning.h"
+#import "SSLPinsTestUtility.h"
 
 
 // Delegate we'll use for our tests
@@ -26,13 +27,6 @@
 
 
 @implementation NSURLConnectionTests
-
-
-+ (NSData*)loadCertificateFromFile:(NSString*)fileName {
-    NSString *certPath =  [[NSBundle bundleForClass:[self class]] pathForResource:fileName ofType:@"der"];
-    NSData *certData = [[NSData alloc] initWithContentsOfFile:certPath];
-    return certData;
-}
 
 
 - (void)setUp
@@ -52,35 +46,11 @@
 - (void)testNSURLConnectionSSLPinning
 {
 
-    // Build our dictionnary of domain => certificates
-    NSMutableDictionary *domainsToPin = [[NSMutableDictionary alloc] init];
-    
-    
-    // For Twitter, we pin the anchor/CA certificate
-    NSData *twitterCertData = [NSURLConnectionTests loadCertificateFromFile:@"VeriSignClass3PublicPrimaryCertificationAuthority-G5"];
-    if (twitterCertData == nil) {
-        NSLog(@"Failed to load a certificate");
+    // Create our SSL pins dictionnary for Twitter, iSEC and NCC
+    NSDictionary *domainsToPin = [SSLPinsTestUtility setupTestSSLPinsDictionnary];
+    if (domainsToPin == nil) {
+        NSLog(@"Failed to pin a certificate");
     }
-    NSArray *twitterTrustedCerts = [NSArray arrayWithObject:twitterCertData];
-    [domainsToPin setObject:twitterTrustedCerts forKey:@"twitter.com"];
-    
-    
-    // For iSEC, we pin the server/leaf certificate
-    NSData *isecCertData = [NSURLConnectionTests loadCertificateFromFile:@"www.isecpartners.com"];
-    if (isecCertData == nil) {
-        NSLog(@"Failed to load a certificate");
-    }
-    // We also pin Twitter's CA cert just to show that you can pin multiple certs to a single domain
-    // This is useful when transitioning between two certificates on the server
-    // The connection will be succesful if at least one of the pinned certs is found in the server's certificate trust chain
-    NSArray *iSECTrustedCerts = [NSArray arrayWithObjects:isecCertData, twitterCertData, nil];
-    [domainsToPin setObject:iSECTrustedCerts forKey:@"www.isecpartners.com"];
-    
-    
-    // For NCC group, we pin an invalid certificate (Twitter's)
-    NSArray *NCCTrustedCerts = [NSArray arrayWithObject:twitterCertData];
-    [domainsToPin setObject:NCCTrustedCerts forKey:@"www.nccgroup.com"];
-    
     
     // Save the SSL pins
     if ([ISPSSLCertificatePinning setupSSLPinsUsingDictionnary:domainsToPin] != YES) {
@@ -133,8 +103,6 @@
 
 
 @end
-
-
 
 
 #pragma mark Delegate class

@@ -6,9 +6,6 @@
 //  Copyright (c) 2014 iSEC Partners. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-
 
 /** This class implements certificate pinning utility functions.
  

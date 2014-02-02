@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 iSEC Partners. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 
 /** Convenience class to automatically perform certificate pinning for NSURLConnection.
  
