@@ -56,8 +56,11 @@
     NSURLSession *session1 = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration] delegate:sessionDelegate1 delegateQueue:nil];
 
     NSURLSessionDataTask *dataTask1 = [session1 dataTaskWithURL:[NSURL URLWithString:@"https://twitter.com/"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
         sessionDelegate1.connectionFinished = YES;
-        sessionDelegate1.connectionSucceeded = YES;
+        if (!error) {
+            sessionDelegate1.connectionSucceeded = YES;
+        }
     }];
     [dataTask1 resume];
     
@@ -67,19 +70,25 @@
     NSURLSession *session2 = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration] delegate:sessionDelegate2 delegateQueue:nil];
     
     NSURLSessionDataTask *dataTask2 = [session2 dataTaskWithURL:[NSURL URLWithString:@"https://www.isecpartners.com/"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+
         sessionDelegate2.connectionFinished = YES;
-        sessionDelegate2.connectionSucceeded = YES;
+        if (!error) {
+            sessionDelegate2.connectionSucceeded = YES;
+        }
     }];
     [dataTask2 resume];
     
     
-    // Connect to NCC
+    // Connect to NCC Group => will fail because we pinned a wrong certificate
     NSURLSessionTaskDelegateTest *sessionDelegate3 = [[NSURLSessionTaskDelegateTest alloc] init];
     NSURLSession *session3 = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration] delegate:sessionDelegate3 delegateQueue:nil];
     
     NSURLSessionDataTask *dataTask3 = [session3 dataTaskWithURL:[NSURL URLWithString:@"https://www.nccgroup.com/"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+
         sessionDelegate3.connectionFinished = YES;
-        sessionDelegate3.connectionSucceeded = YES;
+        if (!error) {
+            sessionDelegate3.connectionSucceeded = YES;
+        }
     }];
     [dataTask3 resume];
 
