@@ -18,12 +18,11 @@ domain in order to require at least one these "pinned" certificates to be part
 of the server's certificate chain received when connecting to the domain over
 SSL or HTTPS.
 
-As any certificate in the certificate chain can be pinned, developers can
-decide to pin the CA/anchor certificate, the server/leaf certificate, or any
-intermediate certificate for a given domain. Each option has different
-advantages and limitations; for example, pinning the server/leaf certificate
-provides the best security but this certificate is going to change more often
-than the CA/anchor certificate.
+This gives developers the flexibility to pin the CA/anchor certificate, the
+server/leaf certificate, or any intermediate certificate for a given domain.
+Each option has different advantages and limitations; for example, pinning the
+server/leaf certificate provides the best security but this certificate is going
+to change more often than the CA/anchor certificate.
 
 A change in the certificate presented by the server (for example because the
 previous certificate expired) will result in the application being unable to
@@ -36,7 +35,7 @@ pins both certificates to the server's domain.
 
 #### API
 
-The ISPCertificatePinning API exposes two methods:
+The ISPCertificatePinning class exposes two methods:
 
 ##### +(BOOL)setupSSLPinsUsingDictionnary:(NSDictionary*)domainsAndCertificates
 This method takes a dictionary with domain names as keys and arrays of
@@ -63,6 +62,13 @@ SSL pins loaded using the setupSSLPinsUsingDictionnary: method.
 
 To implement certificate pinning in their Apps, developers should simply extend
 these classes when creating their own connection delegates.
+
+
+### Sample code
+
+The Xcode unit tests within SSLCertificatePinningTests contain sample code
+demonstrating how to implement certificate pinning when using NSURLConnection
+and NSURLSession.
 
 
 ### Changelog
