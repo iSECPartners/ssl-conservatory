@@ -14,14 +14,14 @@ The following blog post provides more information regarding SSL pinning on
 iOS: https://www.isecpartners.com/news-events/news/2013/february/ssl-pinning-on-ios.aspx
 
 
-### The SSLCertificatePinning class
+### The ISPCertificatePinning class
 
 #### Description
 
-This implementation allows a developer to pin certificates for any number of
-domains the application needs to connect to. Specifically, developers can
-whitelist a certificate that will be required to be part of the server's
-certificate chain, when connecting to the server using SSL or HTTPS.
+This class allows developers to whitelist a list of certificates for a given
+domain in order to require at least one these "pinned" certificates to be part
+of the server's certificate chain received when connecting to the domain over
+SSL or HTTPS.
 
 As any certificate in the certificate chain can be pinned, developers can
 decide to pin the CA/anchor certificate, the server/leaf certificate, or any
@@ -41,32 +41,41 @@ pins both certificates to the server's domain.
 
 #### API
 
-The SSLCertificatePinning API exposes two methods and a convenience class:
+The ISPCertificatePinning API exposes two methods:
 
-* +(BOOL)loadSSLPinsFromDERCertificates:(NSDictionary*)certificates
+* _+(BOOL)setupSSLPinsUsingDictionnary:(NSDictionary*)domainsAndCertificates_
 This method takes a dictionary with domain names as keys and arrays of DER-
 encoded certificates as values, and stores them in a pre-defined location on
 the filesystem. The ability to specify multiple certificates for a single
-domain is useful when transitioning from an expiring certificate to a new one.
+domain is useful when transitioning from an expiring certificate to a new one
 
 * +(BOOL)verifyPinnedCertificateForTrust:(SecTrustRef)trust andDomain:(NSString*)domain
 This method accesses the certificates previously loaded using the
-loadSSLPinsFromDERCertificates: method and inspects the trust object's
+setupSSLPinsUsingDictionnary: method and inspects the trust object's
 certificate chain in order to find at least one certificate pinned to the
 given domain. SecTrustEvaluate() should always be called before this method to
 ensure that the certificate chain is valid.
 
-* The SSLPinnedNSURLConnectionDelegate class is designed to be subclassed and
-extended to implement the NSURLConnectionDelegate protocol and be used as a
-delegate for NSURLConnection objects. This class implements the
-connection:willSendRequestForAuthenticationChallenge: method so that it
-automatically validates that at least one of the certificates pinned to the
-domain the NSURLConnection object is accessing is part of the server's
-certificate chain.
+
+### Convenience delegate classes
+
+This library also provides convenience classes for connections relying on
+NSURLConnection and NSURLSession.
+
+The ISPPinnedNSURLConnectionDelegate and ISPPinnedNSURLSessionDelegate
+implement the connection authentication methods within respectively the
+the NSURLConnectionDelegate and NSURLSessionDelegate protocols, in order to
+automatically validate the server's certificate based on SSL pins configured
+using the setupSSLPinsUsingDictionnary: method.
+
+To implement certificate pinning in their Apps, developers should simply extend
+these classes when creating their own connection delegates.
 
 
 ### Changelog
 
+* v3: Turned the Xcode project into a static library.
+      Added certificate pinning delegate class for NSURLSession connections.
 * v2: Added the ability to pin multiple certificates to a single domain.
 * v1: Initial release.
 
