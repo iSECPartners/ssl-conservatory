@@ -26,7 +26,7 @@
         SecTrustEvaluate(serverTrust, &trustResult);
         if (trustResult == kSecTrustResultUnspecified) {
             
-            // Look for a pinned public key in the server's certificate chain
+            // Look for a pinned certificate in the server's certificate chain
             if ([ISPCertificatePinning verifyPinnedCertificateForTrust:serverTrust andDomain:domain]) {
                 
                 // Found the certificate; continue connecting

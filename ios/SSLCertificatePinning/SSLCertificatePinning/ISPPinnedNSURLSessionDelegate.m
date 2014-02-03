@@ -26,23 +26,20 @@
         SecTrustEvaluate(serverTrust, &trustResult);
         if (trustResult == kSecTrustResultUnspecified) {
             
-            // Look for a pinned public key in the server's certificate chain
+            // Look for a pinned certificate in the server's certificate chain
             if ([ISPCertificatePinning verifyPinnedCertificateForTrust:serverTrust andDomain:domain]) {
                 
                 // Found the certificate; continue connecting
                 completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);
-                //[challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]                      forAuthenticationChallenge:challenge];
             }
             else {
                 // The certificate wasn't found in the certificate chain; cancel the connection
                 completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);
-                //[[challenge sender] cancelAuthenticationChallenge: challenge];
             }
         }
         else {
             // Certificate chain validation failed; cancel the connection
             completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);
-            //[[challenge sender] cancelAuthenticationChallenge: challenge];
         }
     }
 }
