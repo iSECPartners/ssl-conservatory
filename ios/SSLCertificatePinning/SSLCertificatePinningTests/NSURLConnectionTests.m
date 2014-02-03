@@ -52,7 +52,8 @@
         NSLog(@"Failed to pin a certificate");
     }
     
-    // Save the SSL pins
+    
+    // Save the SSL pins so that our connection delegates automatically use them
     if ([ISPSSLCertificatePinning setupSSLPinsUsingDictionnary:domainsToPin] != YES) {
         NSLog(@"Failed to pin the certificates");
     }

@@ -51,12 +51,6 @@
     NSArray *NCCTrustedCerts = [NSArray arrayWithObject:twitterCertData];
     [domainsToPin setObject:NCCTrustedCerts forKey:@"www.nccgroup.com"];
     
-    
-    // Save the SSL pins
-    if ([ISPSSLCertificatePinning setupSSLPinsUsingDictionnary:domainsToPin] != YES) {
-        NSLog(@"Failed to pin the certificates");
-        return nil;
-    }
     return domainsToPin;
 }
 
