@@ -1,25 +1,31 @@
-
-#import <Foundation/Foundation.h>
+//
+//  ISPCertificatePinning.h
+//  SSLCertificatePinning v3
+//
+//  Created by Alban Diquet on 1/14/14.
+//  Copyright (c) 2014 iSEC Partners. All rights reserved.
+//
 
 
 /** This class implements certificate pinning utility functions.
  
  First, the certificates and domains to pin should be loaded using
- loadSSLPinsFromDERCertificates:. This method will store them in
- ""~/Library/SSLPins.plist".
+ setupSSLPinsUsingDictionnary:. This method will store them in
+ "~/Library/SSLPins.plist".
  
  Then, the verifyPinnedCertificateForTrust:andDomain: method can be
- used to validate that at least one the certificates pinned to a 
- specific domain is in the server's certificate chain when connecting to 
- it. This method should be used in the
+ used to validate that at least one the certificates pinned to a
+ specific domain is in the server's certificate chain when connecting to
+ it. This method should be used for example in the
  connection:willSendRequestForAuthenticationChallenge: method of the
  NSURLConnectionDelegate object that is used to perform the connection.
  
- Alternatively, the SSLPinnedNSURLConnectionDelegate class can be
- used instead as the connection delegate.
+ Alternatively, the ISPPinnedNSURLSessionDelegate or
+ ISPPinnedNSURLConnectionDelegate classes can be directly used
+ to create a delegate class performing certificate pinning.
  
  */
-@interface SSLCertificatePinning : NSObject
+@interface ISPCertificatePinning : NSObject
 
 
 /**
@@ -34,14 +40,14 @@
  @return BOOL successfully loaded the public keys and domains
  
  */
-+ (BOOL)loadSSLPinsFromDERCertificates:(NSDictionary*)certificates;
++ (BOOL)setupSSLPinsUsingDictionnary:(NSDictionary*)domainsAndCertificates;
 
 
 /**
  Certificate pinning validation method
  
  This method accesses the certificates previously loaded using the
- loadSSLPinsFromDERCertificates: method and inspects the trust object's
+ setupSSLPinsUsingDictionnary: method and inspects the trust object's
  certificate chain in order to find at least one certificate pinned to the
  given domain. SecTrustEvaluate() should always be called before this method to
  ensure that the certificate chain is valid.
@@ -52,21 +58,5 @@
  
  */
 + (BOOL)verifyPinnedCertificateForTrust:(SecTrustRef)trust andDomain:(NSString*)domain;
-
-@end
-
-
-/** Convenience class to automatically perform certificate pinning.
- 
- SSLPinnedNSURLConnectionDelegate is designed to be subclassed in order to
- implement an NSURLConnectionDelegate class. The
- connection:willSendRequestForAuthenticationChallenge: method it implements
- will automatically validate that at least one the certificates pinned to the domain the
- connection is accessing is part of the server's certificate chain.
- 
- */
-@interface SSLPinnedNSURLConnectionDelegate : NSObject
-
-- (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 
 @end

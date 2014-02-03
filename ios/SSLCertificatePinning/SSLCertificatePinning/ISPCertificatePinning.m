@@ -1,22 +1,30 @@
+//
+//  ISPCertificatePinning.m
+//  SSLCertificatePinning
+//
+//  Created by Alban Diquet on 1/14/14.
+//  Copyright (c) 2014 iSEC Partners. All rights reserved.
+//
 
-#import "SSLCertificatePinning.h"
+#import "ISPCertificatePinning.h"
 
 
 // All the pinned certificate are stored in this plist on the filesystem
 #define PINNED_KEYS_FILE_PATH "~/Library/SSLPins.plist"
 
 
-@implementation SSLCertificatePinning
+@implementation ISPCertificatePinning
 
 
-+ (BOOL)loadSSLPinsFromDERCertificates:(NSDictionary*)certificates {
-    if (certificates == nil) {
+
++ (BOOL)setupSSLPinsUsingDictionnary:(NSDictionary*)domainsAndCertificates {
+    if (domainsAndCertificates == nil) {
         return NO;
     }
     
     // Serialize the dictionary to a plist
     NSError *error;
-    NSData *plistData = [NSPropertyListSerialization dataWithPropertyList:certificates
+    NSData *plistData = [NSPropertyListSerialization dataWithPropertyList:domainsAndCertificates
                                                                    format:NSPropertyListXMLFormat_v1_0
                                                                   options:0
                                                                     error:&error];
@@ -59,7 +67,7 @@
     // For each pinned certificate, check if it is part of the server's cert trust chain
     // We only need one of the pinned certificates to be in the server's trust chain
     for (NSData *pinnedCertificate in trustedCertificates) {
-    
+        
         // Check each certificate in the server's trust chain (the trust object)
         // Unfortunately the anchor/CA certificate cannot be accessed this way
         CFIndex certsNb = SecTrustGetCertificateCount(trust);
@@ -101,42 +109,4 @@
     return NO;
 }
 
-
-@end
-
-
-
-@implementation SSLPinnedNSURLConnectionDelegate
-
-- (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-    
-    if([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
-        
-        SecTrustRef serverTrust = [[challenge protectionSpace] serverTrust];
-        NSString *domain = [[challenge protectionSpace] host];
-        SecTrustResultType trustResult;
-        
-        // Validate the certificate chain with the device's trust store anyway
-        // This *might* give use revocation checking
-        SecTrustEvaluate(serverTrust, &trustResult);
-        if (trustResult == kSecTrustResultUnspecified) {
-            
-            // Look for a pinned public key in the server's certificate chain
-            if ([SSLCertificatePinning verifyPinnedCertificateForTrust:serverTrust andDomain:domain]) {
-
-                // Found the certificate; continue connecting
-                [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]
-                     forAuthenticationChallenge:challenge];
-            }
-            else {
-                // The certificate wasn't found in the certificate chain; cancel the connection
-                [[challenge sender] cancelAuthenticationChallenge: challenge];
-            }
-        }
-        else {
-            // Certificate chain validation failed; cancel the connection
-            [[challenge sender] cancelAuthenticationChallenge: challenge];
-        }
-    }
-}
 @end
