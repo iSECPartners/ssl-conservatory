@@ -16,12 +16,12 @@
  Then, the verifyPinnedCertificateForTrust:andDomain: method can be
  used to validate that at least one the certificates pinned to a
  specific domain is in the server's certificate chain when connecting to
- it. This method should be used in the
+ it. This method should be used for example in the
  connection:willSendRequestForAuthenticationChallenge: method of the
  NSURLConnectionDelegate object that is used to perform the connection.
  
- Alternatively, the ISPSSLPinnedNSURLSessionDelegate or 
- ISPSSLPinnedNSURLConnectionDelegate classes can be directly used 
+ Alternatively, the ISPPinnedNSURLSessionDelegate or
+ ISPPinnedNSURLConnectionDelegate classes can be directly used
  to create a delegate class performing certificate pinning.
  
  */

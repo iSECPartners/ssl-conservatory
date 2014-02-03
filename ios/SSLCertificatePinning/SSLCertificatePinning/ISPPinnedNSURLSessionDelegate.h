@@ -9,7 +9,7 @@
 
 /** Convenience class to automatically perform certificate pinning for NSURLSession.
  
- ISPSSLPinnedNSURLSessionDelegate is designed to be subclassed in order to
+ ISPPinnedNSURLSessionDelegate is designed to be subclassed in order to
  implement an NSURLSession class. The
  URLSession:didReceiveChallenge:completionHandler: method it implements
  will automatically validate that at least one the certificates pinned to the domain the
