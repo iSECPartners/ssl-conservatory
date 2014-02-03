@@ -2,13 +2,11 @@ The SSL Conservatory: iOS Certificate Pinning
 =============================================
 
 
-### SSL Certificate pinning
-
-When an iOS app only needs to communicate to a well-defined set of servers
-over SSL, the security of the app's network communications can be improved
-through SSL pinning. By requiring a specific certificate to be part of the
-server's certificate chain, the threat of a rogue CA or a CA compromise is
-significantly reduced.
+When an iOS application only needs to communicate to a well-defined set of
+servers over SSL or HTTPS, the security of the app's network communications can
+be improved through SSL pinning. By requiring a specific certificate to be part
+of the server's certificate chain, the threat of a rogue CA or a CA compromise
+is significantly reduced.
 
 
 ### The ISPCertificatePinning class
