@@ -43,13 +43,13 @@ pins both certificates to the server's domain.
 
 The ISPCertificatePinning API exposes two methods:
 
-* _+(BOOL)setupSSLPinsUsingDictionnary:(NSDictionary*)domainsAndCertificates_
-This method takes a dictionary with domain names as keys and arrays of DER-
-encoded certificates as values, and stores them in a pre-defined location on
+##### +(BOOL)setupSSLPinsUsingDictionnary:(NSDictionary*)domainsAndCertificates
+This method takes a dictionary with domain names as keys and arrays of
+DER-encoded certificates as values, and stores them in a pre-defined location on
 the filesystem. The ability to specify multiple certificates for a single
 domain is useful when transitioning from an expiring certificate to a new one
 
-* +(BOOL)verifyPinnedCertificateForTrust:(SecTrustRef)trust andDomain:(NSString*)domain
+##### +(BOOL)verifyPinnedCertificateForTrust:(SecTrustRef)trust andDomain:(NSString*)domain
 This method accesses the certificates previously loaded using the
 setupSSLPinsUsingDictionnary: method and inspects the trust object's
 certificate chain in order to find at least one certificate pinned to the
@@ -57,16 +57,14 @@ given domain. SecTrustEvaluate() should always be called before this method to
 ensure that the certificate chain is valid.
 
 
-### Convenience delegate classes
+### Convenience delegate classes for NSURLConnection and NSURLSession
 
 This library also provides convenience classes for connections relying on
-NSURLConnection and NSURLSession.
-
-The ISPPinnedNSURLConnectionDelegate and ISPPinnedNSURLSessionDelegate
-implement the connection authentication methods within respectively the
-the NSURLConnectionDelegate and NSURLSessionDelegate protocols, in order to
-automatically validate the server's certificate based on SSL pins configured
-using the setupSSLPinsUsingDictionnary: method.
+NSURLConnection and NSURLSession. The ISPPinnedNSURLConnectionDelegate and
+ISPPinnedNSURLSessionDelegate implement the connection authentication methods
+within respectively the NSURLConnectionDelegate and NSURLSessionDelegate
+protocols, in order to automatically validate the server's certificate based on
+SSL pins loaded using the setupSSLPinsUsingDictionnary: method.
 
 To implement certificate pinning in their Apps, developers should simply extend
 these classes when creating their own connection delegates.
