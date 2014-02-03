@@ -36,6 +36,8 @@
     [super tearDown];
 }
 
+
+#pragma mark SSL pinning test
 - (void)testNSURLSessionSSLPinning
 {
     
