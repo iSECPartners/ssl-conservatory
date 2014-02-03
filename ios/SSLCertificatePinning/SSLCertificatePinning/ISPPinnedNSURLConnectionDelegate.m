@@ -1,16 +1,16 @@
 //
-//  ISPSSLPinnedNSURLConnectionDelegate.m
+//  ISPPinnedNSURLConnectionDelegate.m
 //  SSLCertificatePinning
 //
 //  Created by Alban Diquet on 1/14/14.
 //  Copyright (c) 2014 iSEC Partners. All rights reserved.
 //
 
-#import "ISPSSLPinnedNSURLConnectionDelegate.h"
-#import "ISPSSLCertificatePinning.h"
+#import "ISPPinnedNSURLConnectionDelegate.h"
+#import "ISPCertificatePinning.h"
 
 
-@implementation ISPSSLPinnedNSURLConnectionDelegate
+@implementation ISPPinnedNSURLConnectionDelegate
 
 
 - (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
@@ -27,7 +27,7 @@
         if (trustResult == kSecTrustResultUnspecified) {
             
             // Look for a pinned public key in the server's certificate chain
-            if ([ISPSSLCertificatePinning verifyPinnedCertificateForTrust:serverTrust andDomain:domain]) {
+            if ([ISPCertificatePinning verifyPinnedCertificateForTrust:serverTrust andDomain:domain]) {
                 
                 // Found the certificate; continue connecting
                 [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]

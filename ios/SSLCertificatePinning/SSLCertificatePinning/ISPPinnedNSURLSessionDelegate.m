@@ -1,5 +1,5 @@
 //
-//  ISPSSLPinnedNSURLSessionDelegate.m
+//  ISPPinnedNSURLSessionDelegate.m
 //  SSLCertificatePinning
 //
 //  Created by Alban Diquet on 1/14/14.
@@ -7,11 +7,11 @@
 //
 #import <Foundation/NSURLSession.h>
 
-#import "ISPSSLPinnedNSURLSessionDelegate.h"
-#import "ISPSSLCertificatePinning.h"
+#import "ISPPinnedNSURLSessionDelegate.h"
+#import "ISPCertificatePinning.h"
 
 
-@implementation ISPSSLPinnedNSURLSessionDelegate
+@implementation ISPPinnedNSURLSessionDelegate
 
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler {
     
@@ -27,7 +27,7 @@
         if (trustResult == kSecTrustResultUnspecified) {
             
             // Look for a pinned public key in the server's certificate chain
-            if ([ISPSSLCertificatePinning verifyPinnedCertificateForTrust:serverTrust andDomain:domain]) {
+            if ([ISPCertificatePinning verifyPinnedCertificateForTrust:serverTrust andDomain:domain]) {
                 
                 // Found the certificate; continue connecting
                 completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);

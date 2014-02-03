@@ -8,13 +8,13 @@
 
 #import <XCTest/XCTest.h>
 
-#import "ISPSSLPinnedNSURLConnectionDelegate.h"
-#import "ISPSSLCertificatePinning.h"
+#import "ISPPinnedNSURLConnectionDelegate.h"
+#import "ISPCertificatePinning.h"
 #import "SSLPinsTestUtility.h"
 
 
 // Delegate we'll use for our tests
-@interface NSURLConnectionDelegateTest : ISPSSLPinnedNSURLConnectionDelegate <NSURLConnectionDelegate>
+@interface NSURLConnectionDelegateTest : ISPPinnedNSURLConnectionDelegate <NSURLConnectionDelegate>
     @property BOOL connectionFinished;
     @property BOOL connectionSucceeded;
 @end
@@ -54,7 +54,7 @@
     
     
     // Save the SSL pins so that our connection delegates automatically use them
-    if ([ISPSSLCertificatePinning setupSSLPinsUsingDictionnary:domainsToPin] != YES) {
+    if ([ISPCertificatePinning setupSSLPinsUsingDictionnary:domainsToPin] != YES) {
         NSLog(@"Failed to pin the certificates");
     }
     

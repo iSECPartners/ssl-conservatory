@@ -1,5 +1,5 @@
 //
-//  ISPSSLPinnedNSURLSessionDelegate.h
+//  ISPPinnedNSURLSessionDelegate.h
 //  SSLCertificatePinning
 //
 //  Created by Alban Diquet on 1/14/14.
@@ -16,7 +16,7 @@
  connection is accessing is part of the server's certificate chain.
  
  */
-@interface ISPSSLPinnedNSURLSessionDelegate : NSObject
+@interface ISPPinnedNSURLSessionDelegate : NSObject
 
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler;
 

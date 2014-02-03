@@ -1,19 +1,19 @@
 //
-//  ISPSSLCertificatePinning.m
+//  ISPCertificatePinning.m
 //  SSLCertificatePinning
 //
 //  Created by Alban Diquet on 1/14/14.
 //  Copyright (c) 2014 iSEC Partners. All rights reserved.
 //
 
-#import "ISPSSLCertificatePinning.h"
+#import "ISPCertificatePinning.h"
 
 
 // All the pinned certificate are stored in this plist on the filesystem
 #define PINNED_KEYS_FILE_PATH "~/Library/SSLPins.plist"
 
 
-@implementation ISPSSLCertificatePinning
+@implementation ISPCertificatePinning
 
 
 

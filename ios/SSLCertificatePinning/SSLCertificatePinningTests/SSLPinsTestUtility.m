@@ -7,7 +7,7 @@
 //
 
 #import "SSLPinsTestUtility.h"
-#import "ISPSSLCertificatePinning.h"
+#import "ISPCertificatePinning.h"
 
 @implementation SSLPinsTestUtility
 

@@ -1,5 +1,5 @@
 //
-//  ISPSSLCertificatePinning.h
+//  ISPCertificatePinning.h
 //  SSLCertificatePinning
 //
 //  Created by Alban Diquet on 1/14/14.
@@ -25,7 +25,7 @@
  to create a delegate class performing certificate pinning.
  
  */
-@interface ISPSSLCertificatePinning : NSObject
+@interface ISPCertificatePinning : NSObject
 
 
 /**
@@ -47,7 +47,7 @@
  Certificate pinning validation method
  
  This method accesses the certificates previously loaded using the
- loadSSLPinsFromDERCertificates: method and inspects the trust object's
+ setupSSLPinsUsingDictionnary: method and inspects the trust object's
  certificate chain in order to find at least one certificate pinned to the
  given domain. SecTrustEvaluate() should always be called before this method to
  ensure that the certificate chain is valid.
