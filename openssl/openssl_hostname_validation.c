@@ -20,15 +20,45 @@
 
 #define HOSTNAME_MAX_SIZE 255
 
+static int tolower(int ch) {
+	if ('A' <= ch && ch <= 'Z')
+		return ch - 'A' + 'a';
+	return ch;
+}
+
+static int memeq_ncase(const char *x, const char *y, size_t l) {
+	if (l == 0)
+		return 1;
+	do {
+		if (tolower(*x++) != tolower(*y++))
+			return 0;
+	} while (--l != 0);
+	return 1;
+}
+
+static int has_nul(const char *s, size_t l) {
+	if (l == 0)
+		return 0;
+	do {
+		if (*s++ == '\0')
+			return 1;
+	} while (--l != 0);
+	return 0;
+}
+
 static HostnameValidationResult validate_name(const char *hostname, ASN1_STRING *certname_asn1) {
 	char *certname_s = (char *) ASN1_STRING_data(certname_asn1);
+	int certname_len = ASN1_STRING_length(certname_asn1), hostname_len = strlen(hostname);
 
 	// Make sure there isn't an embedded NUL character in the DNS name
-	if (ASN1_STRING_length(certname_asn1) != strlen(certname_s)) {
+	if (has_nul(certname_s, certname_len)) {
 		return MalformedCertificate;
 	}
+	if (certname_len != hostname_len) {
+		return MatchNotFound;
+	}
 	// Compare expected hostname with the DNS name
-	return strcasecmp(hostname, certname_s) == 0 ? MatchFound : MatchNotFound;
+	return memeq_ncase(hostname, certname_s, hostname_len) ? MatchFound : MatchNotFound;
 }
 
 /**
