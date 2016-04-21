@@ -57,6 +57,18 @@ static HostnameValidationResult validate_name(const char *hostname, ASN1_STRING 
 	// remove last '.' from hostname
 	if (hostname_len != 0 && hostname[hostname_len - 1] == '.')
 		--hostname_len;
+	// skip the first segment if wildcard
+	if (certname_len > 2 && certname_s[0] == '*' && certname_s[1] == '.') {
+		if (hostname_len != 0) {
+			do {
+				--hostname_len;
+				if (*hostname++ == '.')
+					break;
+			} while (hostname_len != 0);
+		}
+		certname_s += 2;
+		certname_len -= 2;
+	}
 	// Compare expected hostname with the DNS name
 	if (certname_len != hostname_len) {
 		return MatchNotFound;
