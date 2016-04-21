@@ -20,6 +20,17 @@
 
 #define HOSTNAME_MAX_SIZE 255
 
+static HostnameValidationResult validate_name(const char *hostname, ASN1_STRING *certname_asn1) {
+	char *certname_s = (char *) ASN1_STRING_data(certname_asn1);
+
+	// Make sure there isn't an embedded NUL character in the DNS name
+	if (ASN1_STRING_length(certname_asn1) != strlen(certname_s)) {
+		return MalformedCertificate;
+	}
+	// Compare expected hostname with the DNS name
+	return strcasecmp(hostname, certname_s) == 0 ? MatchFound : MatchNotFound;
+}
+
 /**
 * Tries to find a match for hostname in the certificate's Common Name field.
 *
@@ -32,7 +43,6 @@ static HostnameValidationResult matches_common_name(const char *hostname, const 
 	int common_name_loc = -1;
 	X509_NAME_ENTRY *common_name_entry = NULL;
 	ASN1_STRING *common_name_asn1 = NULL;
-	char *common_name_str = NULL;
 
 	// Find the position of the CN field in the Subject field of the certificate
 	common_name_loc = X509_NAME_get_index_by_NID(X509_get_subject_name((X509 *) server_cert), NID_commonName, -1);
@@ -45,26 +55,13 @@ static HostnameValidationResult matches_common_name(const char *hostname, const 
 	if (common_name_entry == NULL) {
 		return Error;
 	}
-
-	// Convert the CN field to a C string
 	common_name_asn1 = X509_NAME_ENTRY_get_data(common_name_entry);
 	if (common_name_asn1 == NULL) {
 		return Error;
-	}			
-	common_name_str = (char *) ASN1_STRING_data(common_name_asn1);
-
-	// Make sure there isn't an embedded NUL character in the CN
-	if (ASN1_STRING_length(common_name_asn1) != strlen(common_name_str)) {
-		return MalformedCertificate;
 	}
 
-	// Compare expected hostname with the CN
-	if (strcasecmp(hostname, common_name_str) == 0) {
-		return MatchFound;
-	}
-	else {
-		return MatchNotFound;
-	}
+	// validate the names
+	return validate_name(hostname, common_name_asn1);
 }
 
 
@@ -95,18 +92,9 @@ static HostnameValidationResult matches_subject_alternative_name(const char *hos
 
 		if (current_name->type == GEN_DNS) {
 			// Current name is a DNS name, let's check it
-			char *dns_name = (char *) ASN1_STRING_data(current_name->d.dNSName);
-
-			// Make sure there isn't an embedded NUL character in the DNS name
-			if (ASN1_STRING_length(current_name->d.dNSName) != strlen(dns_name)) {
-				result = MalformedCertificate;
+			result = validate_name(hostname, current_name->d.dNSName);
+			if (result != MatchNotFound) {
 				break;
-			}
-			else { // Compare expected hostname with the DNS name
-				if (strcasecmp(hostname, dns_name) == 0) {
-					result = MatchFound;
-					break;
-				}
 			}
 		}
 	}
