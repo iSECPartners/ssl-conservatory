@@ -54,10 +54,13 @@ static HostnameValidationResult validate_name(const char *hostname, ASN1_STRING 
 	if (has_nul(certname_s, certname_len)) {
 		return MalformedCertificate;
 	}
+	// remove last '.' from hostname
+	if (hostname_len != 0 && hostname[hostname_len - 1] == '.')
+		--hostname_len;
+	// Compare expected hostname with the DNS name
 	if (certname_len != hostname_len) {
 		return MatchNotFound;
 	}
-	// Compare expected hostname with the DNS name
 	return memeq_ncase(hostname, certname_s, hostname_len) ? MatchFound : MatchNotFound;
 }
 
